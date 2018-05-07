@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ProductMapper">
+
+
+
+
+	<resultMap id="purchaseSelectMap" type="purchase">
+
+		<id jdbcType="NUMERIC"        column="TRAN_NO"            property="tranNo" />
+		<result jdbcType="CHAR"       column="PAYMENT_OPTION"     property="paymentOption" />
+		<result jdbcType="NUMERIC"    column="RECEIVER_NAME"      property="receiverName" />
+		<result jdbcType="VARCHAR"    column="RECEIVER_PHONE"     property="receiverPhone" />
+		<result jdbcType="VARCHAR"    column="DEMAILADDR"         property="divyAddr" />
+		<result jdbcType="VARCHAR"    column="DLVY_REQUEST"       property="divyRequest" />
+		<result jdbcType="CHAR"       column="TRAN_STATUS_CODE"   property="tranCode" />
+		<result jdbcType="DATE"       column="ORDER_DATA"         property="orderDate" />
+		<result jdbcType="DATE"       column="DLVY_DATE"          property="divyDate" />
+		 
+		<result jdbcType="NUMERIC"    column="PROD_NO"   property="purchaseProd.prodNo" />
+		<result jdbcType="VARCHAR"    column="PROD_NAME" property="purchaseProd.prodName"/>
+
+		<result property="purchaseProd.prodDetail"   column="prod_detail"      jdbcType="VARCHAR"/>
+		<result property="purchaseProd.manuDate"     column="manufacture_day"  jdbcType="VARCHAR"/>
+		<result property="purchaseProd.price"        column="price"            jdbcType="NUMERIC"/>
+		<result property="purchaseProd.fileName"     column="image_file"       jdbcType="VARCHAR"/>
+		<result property="purchaseProd.regDate"      column="prod_reg_date"    jdbcType="DATE"/>
+		<result property="purchaseProd.proTranCode" column="TRAN_STATUS_CODE" jdbcType="VARCHAR"/>
+		<result property="purchaseProd.viewNumber"   column="viewnumber"       jdbcType="NUMERIC" />
+		<result property="purchaseProd.stock"        column="stock"            jdbcType="NUMERIC"/>
+
+	</resultMap>
+	
+	<resultMap id="productSelectMap" type="product">
+		<result jdbcType="NUMERIC"    column="PROD_NO"   property="prodNo" />
+		<result jdbcType="VARCHAR"    column="PROD_NAME" property="prodName"/>
+		<result property="prodDetail"   column="prod_detail"      jdbcType="VARCHAR"/>
+		<result property="manuDate"     column="manufacture_day"  jdbcType="VARCHAR"/>
+		<result property="price"        column="price"            jdbcType="NUMERIC"/>
+		<result property="fileName"     column="image_file"       jdbcType="VARCHAR"/>
+		<result property="regDate"      column="prod_reg_date"    jdbcType="DATE"/>
+		<result property="proTranCode" column="TRAN_STATUS_CODE" jdbcType="VARCHAR"/>
+		<result property="viewNumber"   column="viewnumber"       jdbcType="NUMERIC" />
+		<result property="stock"        column="stock"            jdbcType="NUMERIC"/>
+	</resultMap>
+
+	<resultMap id="BaguniSelectMap" type="baguni">
+		<result property="userId" column="USER_ID" jdbcType="VARCHAR" />
+		<result property="prodNo" column="PROD_NO" jdbcType="INTEGER" />
+	</resultMap>
+
+	<update id="updateStock" parameterType="product">
+		UPDATE PRODUCT
+		SET stock =#{stock}
+		WHERE prod_no=#{prodNo}
+	</update>
+
+	<update id="updateViewNumber" parameterType="product">
+		UPDATE PRODUCT
+		SET viewnumber=#{viewNumber}
+		WHERE prod_no=#{prodNo}
+	</update>
+
+	<insert id="insertBaguni" parameterType="baguni">
+		INSERT
+		INTO baguni(user_id,prod_no)
+		VALUES (#{userId},#{prodNo})
+	</insert>
+
+	<select id="findBaguni" parameterType="baguni" resultMap="BaguniSelectMap">
+		SELECT
+		user_id,prod_no
+		FROM baguni
+		WHERE user_id=#{userId} AND prod_no=#{prodNo}
+	</select>
+
+	<insert id="insertProduct" parameterType="product">
+		INSERT
+		INTO
+		product(prod_no,prod_name,prod_detail,manufacture_day,price,reg_date,stock)
+		VALUES(seq_product_prod_no.nextval,#{prodName},#{prodDetail},#{manuDate},#{price},SYSDATE,#{stock})
+	</insert>
+
+
+	<select id="findProduct" parameterType="int" resultMap="productSelectMap">
+		SELECT
+		prod_no,prod_name,prod_detail,manufacture_day,price,reg_date,viewnumber,stock
+		FROM product
+		WHERE prod_no=#{value}
+	</select>
+
+	<update id="updateProduct" parameterType="product">
+		UPDATE PRODUCT
+		SET
+		prod_name=#{prodName},prod_detail=#{prodDetail},manufacture_day=#{manuDate},price=#{price}
+		WHERE prod_no=#{prodNo}
+	</update>
+
+	<select id="getTotalCount" parameterType="search" resultType="int">
+		<!-- SELECT COUNT(*) FROM (SELECT * FROM product <if test="searchCondition 
+			!= null"> <if test="searchCondition==0 and searchKeyword!='' "> WHERE prod_no=#{searchKeyword} 
+			</if> <if test="searchCondition == 1 and searchKeyword !='' "> WHERE prod_name 
+			LIKE '%${searchKeyword}%' </if> <if test="searchCondition==2 and searchKeyword 
+			!=''"> WHERE price=#{searchKeyword} </if> </if> ORDER BY prod_name) -->
+		SELECT COUNT(*)
+		FROM(SELECT * 
+			 	   FROM product p
+			 	   <where>
+			 	   		<if test="#{searchCondition} != null">		
+				 	   		<if test="searchCondition==0 and searchKeyword!='' ">
+				 	   		 AND prod_no=#{searchKeyword}
+				 	   		</if>
+				 	   		<if test="searchCondition == 1 and searchKeyword !='' ">
+				 	   		 AND prod_name LIKE '%${searchKeyword}%'
+				 	   		</if>
+				 	   		<if test="searchCondition==2 and searchKeyword !=''">
+				 	   		 AND price=#{searchKeyword}
+				 	   		</if>
+			 	   		</if>
+			 	   	</where>)
+	</select>
+
+
+	<select id="getProductList" parameterType="search" resultMap="purchaseSelectMap">
+		SELECT * 
+		from(SELECT
+			 inner_table.*,ROWNUM AS row_seq 
+			 FROM (SELECT * 
+			 	   FROM product
+			 	   <where>
+			 	   		<if test="#{searchCondition} != null">		
+				 	   		<if test="searchCondition==0 and searchKeyword!='' ">
+				 	   		 AND prod_no=#{searchKeyword}
+				 	   		</if>
+				 	   		<if test="searchCondition == 1 and searchKeyword !='' ">
+				 	   		 AND prod_name LIKE '%${searchKeyword}%'
+				 	   		</if>
+				 	   		<if test="searchCondition==2 and searchKeyword !=''">
+				 	   		 AND price=#{searchKeyword}
+				 	   		</if>
+			 	   		</if>
+			 	   	</where>
+			 	   ORDER BY prod_name)inner_table
+			 WHERE ROWNUM &lt;=#{currentPage}*#{pageSize})p , transaction t
+		WHERE t.prod_no(+)=p.prod_no 
+		AND row_seq BETWEEN ((#{currentPage}-1)*#{pageSize}+1) AND #{currentPage}*#{pageSize}
+	</select>
+
+	<select id="productList" resultMap="purchaseSelectMap">
+		<!-- select * from transaction,product where transaction.prod_no(+)=product.prod_no -->
+		select
+		p.PROD_NO ,
+		p.PROD_NAME ,
+		p.PROD_DETAIL ,
+		p.MANUFACTURE_DAY ,
+		p.PRICE ,
+		p.IMAGE_FILE ,
+		p.REG_DATE ,
+		p.VIEWNUMBER ,
+		p.STOCK,
+		t.TRAN_NO,
+		t.PAYMENT_OPTION,
+		t.RECEIVER_NAME,
+		t.RECEIVER_PHONE,
+		t.DEMAILADDR,
+		t.DLVY_REQUEST,
+		t.TRAN_STATUS_CODE,
+		t.ORDER_DATA,
+		t.DLVY_DATE
+		from transaction t,product p where t.prod_no(+)=p.prod_no
+		order by prod_no
+	</select>
+
+
+</mapper>
