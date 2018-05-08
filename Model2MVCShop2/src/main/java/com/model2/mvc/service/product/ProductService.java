@@ -11,6 +11,8 @@ import com.model2.mvc.service.domain.Product;
 
 public interface ProductService {
 	
+	public void updateStockCode(Product product) throws Exception;
+	
 	public void addProduct(Product productVO) throws Exception;
 
 	public Product getProduct(int prodNo) throws Exception;

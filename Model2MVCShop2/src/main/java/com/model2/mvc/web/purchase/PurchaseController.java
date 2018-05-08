@@ -79,6 +79,13 @@ public class PurchaseController {
 		
 	
 		productService.updateStock(product);
+		product = productService.getProduct(product.getProdNo());
+		
+		if(product.getStock() ==0) {
+			product.setStockCode("0");
+			productService.updateStockCode(product);
+		}
+		
 		purchase.setBuyer(user);
 		purchase.setPurchaseProd(product);
 		purchase.setOrderDate(orderDate);
@@ -176,12 +183,15 @@ public class PurchaseController {
 	}
 	@RequestMapping("/updateTranCodeByProd.do")
 	public ModelAndView updateTranCodeByProdAction(@ModelAttribute("purchase") Purchase purchase,
-																										HttpServletRequest request) throws Exception {
+																										@RequestParam(value = "menu",required =false) String menu,
+																											HttpServletRequest request) throws Exception {
 
 		System.out.println("updateTranCodeByProdAction() start.........");
 		String resultPage = null;
 		purchaseService.updateTranCode(purchase);
-		if(request.getParameter("menu") !=null) {
+		purchase = purchaseService.getPurchase(purchase.getTranNo());
+		
+		if(menu !=null) {			
 			resultPage = "/listProduct.do";
 		}else {
 			resultPage = "/listPurchase.do";

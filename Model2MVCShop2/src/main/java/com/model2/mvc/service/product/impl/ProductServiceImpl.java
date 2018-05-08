@@ -30,6 +30,10 @@ public class ProductServiceImpl implements ProductService {
 		System.out.println(this.getClass());
 	}
 	
+	public void updateStockCode(Product product) throws Exception{
+		
+		productDAO.updateStockCode(product);
+	}
 	//ÇßÀ½
 	public void updateStock(Product product) throws Exception {
 		productDAO.updateStock(product);

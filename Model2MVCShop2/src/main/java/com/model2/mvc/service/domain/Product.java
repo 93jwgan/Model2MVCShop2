@@ -15,6 +15,7 @@ public class Product {
 	private String proTranCode;
 	private int viewNumber;
 	private int stock;
+	private String stockCode;
 	
 	public Product(){
 		proTranCode = "0";
@@ -87,7 +88,8 @@ public class Product {
 	public String toString() {
 		return "ProductVO : [fileName]" + fileName
 				+ "[manuDate]" + manuDate+ "[price]" + price + "[prodDetail]" + prodDetail
-				+ "[prodName]" + prodName + "[prodNo]" + prodNo+ "[viewNumber]"+viewNumber ;
+				+ "[prodName]" + prodName + "[prodNo]" + prodNo+ "[viewNumber]"+viewNumber
+				+ "[regDate]" + regDate + "[stockCode]" + stockCode;
 	}
 
 	public int getViewNumber() {
@@ -104,5 +106,13 @@ public class Product {
 
 	public void setStock(int stock) {
 		this.stock = stock;
+	}
+
+	public String getStockCode() {
+		return stockCode;
+	}
+
+	public void setStockCode(String stockCode) {
+		this.stockCode = stockCode;
 	}	
 }

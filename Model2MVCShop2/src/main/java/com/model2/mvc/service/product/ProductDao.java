@@ -11,6 +11,8 @@ import com.model2.mvc.service.domain.Purchase;
 
 public interface ProductDao {
 	
+	public void updateStockCode(Product product) throws Exception;
+	
 	public void updateStock(Product product) throws Exception;
 	
 	public void updateViewNumber(Product product) throws Exception;

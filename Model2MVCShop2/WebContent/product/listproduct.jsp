@@ -18,7 +18,7 @@
 
 
 --%>
-
+<%System.out.println("listproduct.jsp 에서의 menu ::" +(String)request.getAttribute("menu")); %>
 
 <html>
 <head>
@@ -203,19 +203,7 @@ function fncGetUserList(currentPage){
 				<td align="left"><a href="/getProduct.do?prodNo=${list.purchaseProd.prodNo}&menu=manage">${list.purchaseProd.prodName }</a>
 <%-- 				<%} %> --%>
 				</c:if>
-		<td></td>
-<%-- 		<td align="left"><%=vo.getPrice() %></td> --%>
-		<td align="left">${list.purchaseProd.price}</td>
-		<td></td>
-<%-- 		<td align="left"><%=vo.getRegDate() %></td> --%>
-			<td align="left">${list.purchaseProd.regDate}</td>
-		<td></td>
-		<td align="left">
 		
-			판매중
-		
-		</td>	
-		<td align="left">${list.purchaseProd.viewNumber }</td>
 <%-- 		<%}else if(purchase.getTranCode().trim().equals("0")) { %> --%>
 			</c:if>
 			<c:if test="${list.tranCode.trim()=='0' }">
@@ -226,41 +214,14 @@ function fncGetUserList(currentPage){
 				
 <%-- 				<td align="left"><%=vo.getProdName() %></td> --%>
 				<td align="left"><a href="/getProduct.do?prodNo=${list.purchaseProd.prodNo}&menu=search&viewNumber=${list.purchaseProd.viewNumber+1}">${list.purchaseProd.prodName} trancode=0</a></td>
-					<td></td>
-<%-- 					<td align="left"><%=vo.getPrice() %></td> --%>
-				<td align="left">${list.purchaseProd.price}</td>
-					<td></td>
-<%-- 					<td align="left"><%=vo.getRegDate() %></td> --%>
-				<td align="left">${list.purchaseProd.regDate}</td>	
-					<td></td>
-					<td align="left">
-					
-					 	재고 없음
-					
-					</td>	
-							
-					<td align="left">${list.purchaseProd.viewNumber }</td>
+			
 <%-- 				<% }else if(menu.equals("manage")){%> --%>
 				</c:if>
 				<c:if test="${menu=='manage'}">
 <%-- 				<td align="left"><a href="/getProduct.do?prodNo=<%=vo.getProdNo()%>&menu=manage"><%=vo.getProdName() %></a></td> --%>
 				<td align="left"><a href="/getProduct.do?prodNo=${list.purchaseProd.prodNo}&menu=manage">${list.purchaseProd.prodName}</a></td>
 				
-					<td></td>
-<%-- 					<td align="left"><%=vo.getPrice() %></td> --%>
-					<td align="left">${list.purchaseProd.price}</td>
-					<td></td>
-<%-- 					<td align="left"><%=vo.getRegDate() %></td> --%>
-					<td align="left">${list.purchaseProd.regDate}</td>
-					<td></td>
-					<td align="left">
-		
-<%-- 		 				구매 완료 <a href="/updateTranCodeByProd.do?tranNo=<%=purchase.getTranNo()%>&tranCode=1&menu=<%=menu%>">배송하기</a> --%>
-						구매 완료 <a href="/updateTranCodeByProd.do?tranNo=${list.tranNo}&tranCode=1&menu=${menu}">배송하기</a>
-		
-					</td>	
-					<td align="left">${list.purchaseProd.viewNumber }</td>
-				
+					
 <%-- 				<%} %> --%>		
 			</c:if>
 	
@@ -275,20 +236,6 @@ function fncGetUserList(currentPage){
 				
 <%-- 				<td align="left"><%=vo.getProdName() %></td> --%>
 				<td align="left"><a href="/getProduct.do?prodNo=${list.purchaseProd.prodNo}&menu=search&viewNumber=${list.purchaseProd.viewNumber+1}">${list.purchaseProd.prodName} trancode=1</a></td>
-					<td></td>
-<%-- 					<td align="left"><%=vo.getPrice() %></td> --%>
-					<td align="left">${list.purchaseProd.price}</td>
-					<<td align="left"></td>
-					<td></td>
-<%-- 					<td align="left"><%=vo.getRegDate() %></td> --%>
-					<td align="left">${list.purchaseProd.regDate}</td>
-					<td></td>
-					<td align="left">
-					
-					 	재고 없음
-					
-					</td>	
-					<td align="left">${list.purchaseProd.viewNumber }</td>
 				
 <%-- 				<% }else if(menu.equals("manage")){%> --%>
 					</c:if>
@@ -296,20 +243,7 @@ function fncGetUserList(currentPage){
 <%-- 				<td align="left"><a href="/getProduct.do?prodNo=<%=vo.getProdNo()%>&menu=manage"><%=vo.getProdName() %></a></td> --%>
 					<td align="left"><a href="/getProduct.do?prodNo=${list.purchaseProd.prodNo}]&menu=manage">${list.purchaseProd.prodName}</a></td>
 				
-					<td></td>
-<%-- 					<td align="left"><%=vo.getPrice() %></td> --%>
-					<td align="left">${list.purchaseProd.price}</td>
-					<td></td>
-<%-- 					<td align="left"><%=vo.getRegDate() %></td> --%>
-					<td align="left">${list.purchaseProd.regDate}</td>
-					<td></td>
-					<td align="left">
-		
-		 				배송 완료
-		
-					</td>	
-					<td align="left">${list.purchaseProd.viewNumber }</td>
-		
+			
 <%-- 				<%} %>		 --%>
 			</c:if>
 <%-- 		<%}else if(purchase.getTranCode().trim().equals("2")){ %> --%>
@@ -322,19 +256,6 @@ function fncGetUserList(currentPage){
 				
 <%-- 				<td align="left"><%=vo.getProdName() %></td> --%>
 					<td align="left"><a href="/getProduct.do?prodNo=${list.purchaseProd.prodNo}&menu=search&viewNumber=${list.purchaseProd.viewNumber+1}">${list.purchaseProd.prodName} trancode=2</a></td>
-					<td></td>
-<%-- 					<td align="left"><%=vo.getPrice() %></td> --%>
-					<td align="left">${list.purchaseProd.price}</td>
-					<td></td>
-<%-- 					<td align="left"><%=vo.getRegDate() %></td> --%>
-					<td align="left">${list.purchaseProd.regDate }</td>
-					<td></td>
-					<td align="left">
-					
-					 	재고 없음
-					
-					</td>	
-					<td align="left">${list.purchaseProd.viewNumber }</td>
 				
 <%-- 				<% }else if(menu.equals("manage")){%> --%>
 				</c:if>
@@ -342,19 +263,7 @@ function fncGetUserList(currentPage){
 <%-- 				<td align="left"><a href="/getProduct.do?prodNo=<%=vo.getProdNo()%>&menu=manage"><%=vo.getProdName() %></a></td> --%>
 				<td align="left"><a href="/getProduct.do?prodNo=${list.purchaseProd.prodNo}&menu=manage">${list.purchaseProd.prodName }</a></td>
 				
-					<td></td>
-<%-- 					<td align="left"><%=vo.getPrice() %></td> --%>
-					<td align="left">${list.purchaseProd.price}</td>
-					<td></td>
-<%-- 					<td align="left"><%=vo.getRegDate() %></td> --%>
-						<td align="left">${list.purchaseProd.regDate}</td>
-					<td></td>
-					<td align="left">
-		
-		 				배송 완료
-		
-					</td>	
-					<td align="left">${list.purchaseProd.viewNumber }</td>
+			
 <%-- 				<%} %>		 --%>
 				</c:if>
 		
@@ -362,7 +271,65 @@ function fncGetUserList(currentPage){
 <%-- 		<%} %> --%>
 		</c:if>
 		
+		
+		
+		
+		
+		<td></td>
+		<td align="left">${list.purchaseProd.price}</td>
+		<td></td>
+		<td align="left">${list.purchaseProd.regDate }</td>
+		<td></td>
+		<c:if test="${menu=='search' }">
+			<c:if test="${list.purchaseProd.stockCode.trim()==null }">
+			<td align="left">
+
+			판매중
 	
+			</td>	
+			
+			</c:if>
+			<c:if test="${list.purchaseProd.stockCode.trim() =='0' }">
+			<td align="left">
+			
+			재고없음
+			
+			</td>
+			</c:if>
+		</c:if>
+		<c:if test="${menu=='manage' }">
+			<c:if test="${list.tranCode.trim() ==null}" >
+			<td align="left">
+			
+			판매중
+			
+			</td>
+			</c:if>
+			<c:if test="${list.tranCode.trim() =='0' }">			
+			<td align="left">
+	
+			구매 완료 <a href="/updateTranCodeByProd.do?tranNo=${list.tranNo}&tranCode=1&menu=manage">배송하기</a>
+	
+			</td>
+			</c:if>
+			<c:if test="${list.tranCode.trim() =='1' }">
+			<td align="left">
+
+			배송완료
+	
+			</td>
+			</c:if>
+			<c:if test="${list.tranCode.trim() =='2' }">
+			<td align="left">
+
+			배송완료
+	
+			</td>
+			</c:if>
+		
+		
+		</c:if>
+	<td align="left">${list.purchaseProd.viewNumber }</td>
 	</tr>
 	<tr>
 		<td colspan="11" bgcolor="D6D7D6" height="1"></td>

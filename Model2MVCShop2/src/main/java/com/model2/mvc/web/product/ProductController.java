@@ -109,9 +109,11 @@ public class ProductController {
 		User userVO = (User)session.getAttribute("user");
 		
 		if(menu==null) {
+			
 			menu =(String)request.getAttribute("menu");
 		}
-
+		System.out.println("@@@@@@@@@@@@@request.getParameter(\"menu\")@@@@@@@@@@@"+request.getParameter("menu"));
+		System.out.println("@@@@@@@@@@@@@menu@@@@@@@@@@@"+menu);
 		int currentPage =1;
 		if(search.getCurrentPage() !=0) {
 			currentPage=search.getCurrentPage();
@@ -121,6 +123,7 @@ public class ProductController {
 		search.setPageSize(pageSize);
 	
 		Map<String,Object> map = productService.getProductList(search);
+
 		
 		Page resultPage	= 
 				new Page( currentPage, ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);

@@ -28,10 +28,11 @@
 		<result property="purchaseProd.manuDate"     column="manufacture_day"  jdbcType="VARCHAR"/>
 		<result property="purchaseProd.price"        column="price"            jdbcType="NUMERIC"/>
 		<result property="purchaseProd.fileName"     column="image_file"       jdbcType="VARCHAR"/>
-		<result property="purchaseProd.regDate"      column="prod_reg_date"    jdbcType="DATE"/>
+		<result property="purchaseProd.regDate"      column="reg_date"    jdbcType="DATE"/>
 		<result property="purchaseProd.proTranCode" column="TRAN_STATUS_CODE" jdbcType="VARCHAR"/>
 		<result property="purchaseProd.viewNumber"   column="viewnumber"       jdbcType="NUMERIC" />
 		<result property="purchaseProd.stock"        column="stock"            jdbcType="NUMERIC"/>
+		<result property="purchaseProd.stockCode"    column="stock_code"       jdbcType="VARCHAR"/>
 
 	</resultMap>
 	
@@ -42,16 +43,24 @@
 		<result property="manuDate"     column="manufacture_day"  jdbcType="VARCHAR"/>
 		<result property="price"        column="price"            jdbcType="NUMERIC"/>
 		<result property="fileName"     column="image_file"       jdbcType="VARCHAR"/>
-		<result property="regDate"      column="prod_reg_date"    jdbcType="DATE"/>
+		<result property="regDate"      column="reg_date"    jdbcType="DATE"/>
 		<result property="proTranCode" column="TRAN_STATUS_CODE" jdbcType="VARCHAR"/>
 		<result property="viewNumber"   column="viewnumber"       jdbcType="NUMERIC" />
 		<result property="stock"        column="stock"            jdbcType="NUMERIC"/>
+		<result property="stockCode"    column="stock_code"       jdbcType="VARCHAR"/>
 	</resultMap>
 
 	<resultMap id="BaguniSelectMap" type="baguni">
 		<result property="userId" column="USER_ID" jdbcType="VARCHAR" />
 		<result property="prodNo" column="PROD_NO" jdbcType="INTEGER" />
 	</resultMap>
+
+	<update id="updateStockCode" parameterType="product">
+		UPDATE PRODUCT
+		SET stock_code=#{stockCode}
+		WHERE prod_no=#{prodNo}
+	</update>
+
 
 	<update id="updateStock" parameterType="product">
 		UPDATE PRODUCT
@@ -88,7 +97,7 @@
 
 	<select id="findProduct" parameterType="int" resultMap="productSelectMap">
 		SELECT
-		prod_no,prod_name,prod_detail,manufacture_day,price,reg_date,viewnumber,stock
+		prod_no,prod_name,prod_detail,manufacture_day,price,reg_date,viewnumber,stock,stock_code
 		FROM product
 		WHERE prod_no=#{value}
 	</select>

@@ -151,7 +151,7 @@
 
 
 
-
+				<c:if test="${productVO.stockCode.trim() ==null }">
 				<td width="17" height="23">
 					<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
 				</td>
@@ -162,6 +162,8 @@
 					<a href="/addPurchaseView.do?prod_no=${productVO.prodNo}">±¸¸Å</a>
 					
 				</td>
+				</c:if>
+
 				
 				
 

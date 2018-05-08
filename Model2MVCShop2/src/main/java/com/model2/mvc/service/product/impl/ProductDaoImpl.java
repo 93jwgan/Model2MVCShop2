@@ -35,6 +35,11 @@ public class ProductDaoImpl implements ProductDao{
 		// TODO Auto-generated constructor stub
 		System.out.println(this.getClass());
 	}
+	
+	public void updateStockCode(Product product) throws Exception{
+		sqlSession.update("ProductMapper.updateStockCode",product);
+	}
+	
 	public void updateStock(Product product) throws Exception{
 		sqlSession.update("ProductMapper.updateStock",product);
 	}
