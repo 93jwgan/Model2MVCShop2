@@ -1,15 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
      <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%-- 
-<%@page import = "com.model2.mvc.domain.Product" %> 
- 
- 
-    <%
-    	Product product=(Product)request.getAttribute("productVO"); 
-    	String menu=(String)request.getAttribute("menu");    	
-    %>
-    --%>
+
 <html>
 <head>
 
@@ -132,7 +124,7 @@
 
 		<table border="0" cellspacing="0" cellpadding="0">
 			<tr>
-<%-- 		<%if(menu==null||menu.equals("search")){ %> --%>
+
 		<c:if test="${menu==null||menu=='search' }">
 
 				
@@ -143,7 +135,7 @@
 				
 					<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top: 3px;">
 						
-					<a href="/jangbaguni.do?prod_no=${productVO.prodNo}">장바구니담기</a>
+					<a href="/product/jangbaguniAction?prod_no=${productVO.prodNo}">장바구니담기</a>
 					
 				</td>
 				
@@ -159,7 +151,7 @@
 				
 					<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top: 3px;">
 						
-					<a href="/addPurchaseView.do?prod_no=${productVO.prodNo}">구매</a>
+					<a href="/purchase/addPurchaseViewAction?prod_no=${productVO.prodNo}">구매</a>
 					
 				</td>
 				</c:if>
@@ -179,7 +171,7 @@
 					<img src="/images/ct_btnbg03.gif" width="14" height="23">
 				</td>
 				<td width="30"></td>
-<%-- 		<%} %> --%>
+
 			</c:if>
 				<td width="17" height="23">
 					<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
@@ -197,18 +189,18 @@
 				
 				
 				<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top: 3px;">
-<%-- 					<%if(menu == null){%> --%>
+
 						<c:if test="${menu==null }">
-						<a href="/listProduct.do?menu=manage">확인</a>
+						<a href="/product/listProductAction?menu=manage">확인</a>
 						</c:if>
-<%-- 					<%}else if(menu.equals("search")||menu.equals("purchase")){ %> --%>
+
 						<c:if test="${menu=='search'}">
-						<a href="/listProduct.do?menu=search">확인</a>
+						<a href="/product/listProductAction?menu=search">확인</a>
 						</c:if>
 						<c:if test="${menu=='purchase' }">
 						<a href="javascript:history.go(-1)">이전</a>
 						</c:if>
-<%-- 					<% }%> --%>
+
 				</td>
 				
 				

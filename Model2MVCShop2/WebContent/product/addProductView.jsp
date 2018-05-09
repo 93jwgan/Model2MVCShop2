@@ -1,15 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
  <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%-- ><%@page import = "com.model2.mvc.domain.Product" %> 
- 
-
-    <%
-    	Product product = (Product)request.getAttribute("productVO");
-    	String menu = (String)request.getAttribute("menu");
-    %>
---%>    
-    
 
 
 <html>
@@ -51,9 +42,9 @@ function fncAddProduct(){
 	
 	
 	if(number == "1" ){
-		document.detailForm.action='/addProduct.do'	
+		document.detailForm.action='/product/addProductAction'	
 	}else{
-		document.detailForm.action='/updateProduct.do';
+		document.detailForm.action='/product/updateProductAction';
 	}
 	
 	document.detailForm.submit();
@@ -81,17 +72,6 @@ function resetData(){
 		<td background="/images/ct_ttl_img02.gif" width="100%" style="padding-left: 10px;">
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
-				<%-- 
-				<%if((menu==null)) {%>
-					<td width="93%" class="ct_ttl01">상품등록</td>
-					<td width="20%" align="right">&nbsp;</td>
-					
-				<%}else if(menu.equals("manage")) { %>
-					<td width="93%" class="ct_ttl01">상품수정</td>
-					<td width="20%" align="right">&nbsp;</td>
-									
-				<%} %>
-				--%>
 				<td width="93%" class="ct_ttl01">${menu=='manage' ? "상품수정" : "상품등록" }</td>
 					<td width="20%" align="right">&nbsp;</td>
 				</tr>
@@ -116,17 +96,6 @@ function resetData(){
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
 					<td width="105">
-					<%-- 
-					<%if(menu==null) {%>
-						<input type="text" name="prodName" class="ct_input_g" 
-									style="width: 100px; height: 19px" maxLength="20" >
-					
-					<%}else if(menu.equals("manage")){ %>
-						<input type="text" name="prodName" class="ct_input_g" 
-									style="width: 100px; height: 19px" maxLength="20" value =<%=product.getProdName() %>>
-						
-					<%} %>
-					--%>
 					<input type="text" name="prodName" class="ct_input_g" 
 									style="width: 100px; height: 19px" maxLength="20" value = "${menu=='manage' ? productVO.prodName : ""}" >
 					
@@ -144,16 +113,6 @@ function resetData(){
 		</td>
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">
-			<%-- 
-			<%if(menu==null){ %>
-			<input type="text" name="prodDetail" class="ct_input_g" 
-						style="width: 100px; height: 19px" maxLength="10" minLength="6"/>
-			
-			<%}else if(menu.equals("manage")) {%>
-			<input type="text" name="prodDetail" value=<%=product.getProdDetail() %> class="ct_input_g" 
-						style="width: 100px; height: 19px" maxLength="10" minLength="6"/>		
-			<%} %>
-			--%>
 			<input type="text" name="prodDetail" class="ct_input_g" 
 						style="width: 100px; height: 19px" maxLength="10" minLength="6" value = "${menu=='manage'? productVO.prodDetail:"" }">
 		</td>
@@ -167,16 +126,6 @@ function resetData(){
 		</td>
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">
-		<%--
-			<%if(menu==null){%>
-			<input type="text" name="manuDate" readonly="readonly" class="ct_input_g"  
-						style="width: 100px; height: 19px"	maxLength="10" minLength="6"/>
-			
-			<%}else if(menu.equals("manage")) {%>
-			<input type="text" name="manuDate" value=<%=product.getManuDate() %> readonly="readonly" class="ct_input_g"  
-						style="width: 100px; height: 19px"	maxLength="10" minLength="6"/>
-			<%} %>
-		--%>
 		<input type="text" name="manuDate"  readonly="readonly" class="ct_input_g"  value="${menu=='manage'? productVO.manuDate:"" }"
 						style="width: 100px; height: 19px"	maxLength="10" minLength="6"/>
 				&nbsp;<img src="../images/ct_icon_date.gif" width="15" height="15" 
@@ -192,16 +141,6 @@ function resetData(){
 		</td>
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">
-		<%-- 
-			<%if(menu==null){  %>
-			<input type="text" name="price" 	class="ct_input_g" 
-						style="width: 100px; height: 19px" maxLength="10">&nbsp;원
-			
-			<%}else if(menu.equals("manage")) {%>
-			<input type="text" name="price" value=<%=product.getPrice() %>	class="ct_input_g" 
-						style="width: 100px; height: 19px" maxLength="10">&nbsp;원
-			<%} %>
-			--%>
 			<input type="text" name="price" 	class="ct_input_g" value ="${menu=='manage' ? productVO.price:"" }"
 						style="width: 100px; height: 19px" maxLength="10">&nbsp;원
 		</td>
@@ -239,16 +178,16 @@ function resetData(){
 					<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
 				</td>
 				<td background="/images/ct_btnbg02.gif" class="ct_btn01"  style="padding-top: 3px;">
-<%-- 					<%if(menu==null){ %> --%>
+
 					<c:if test="${menu==null }">
 					<input type="hidden" name="prodNo" value="1" >
 					<a href="javascript:fncAddProduct();">등록</a>
 					</c:if>
-<%-- 					<%}else if(menu.equals("manage")){ %> --%>
+
 					<c:if test="${menu=='manage'}">
 					<input type="hidden" name="prodNo" value="${productVO.prodNo }">
 					<a href="javascript:fncAddProduct();">수정</a>
-<%-- 					<%} %> --%>
+
 					</c:if>
 				</td>
 				<td width="14" height="23">
@@ -259,15 +198,15 @@ function resetData(){
 					<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
 				</td>
 				<td background="/images/ct_btnbg02.gif" class="ct_btn01"	 style="padding-top: 3px;">
-<%-- 					<%if(menu==null){ %> --%>
+
 						<c:if test="${menu==null }">
 						<a href="javascript:resetData();">취소</a>
 						</c:if>
-<%-- 					<%}else if(menu.equals("manage")){ %> --%>
+
 						<c:if test="${menu=='manage' }">
 						<a href="javascript:history.go(-1)">취소</a>
 						</c:if>
-<%-- 					<%} %> --%>
+
 				</td>
 				<td width="14" height="23">
 					<img src="/images/ct_btnbg03.gif" width="14" height="23"/>

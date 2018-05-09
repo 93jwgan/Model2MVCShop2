@@ -26,6 +26,7 @@ import com.model2.mvc.service.product.ProductService;
 
 
 @Controller
+@RequestMapping("/product/*")
 public class ProductController {
 
 	@Autowired
@@ -44,7 +45,7 @@ public class ProductController {
 	//@Value("#{commonProperties['pageSize'] ?: 2}")
 	int pageSize;
 
-	@RequestMapping("/addProduct.do")
+	@RequestMapping(value="addProductAction")
 	public String addProductAction(@ModelAttribute("product") Product product,HttpServletRequest request) throws Exception {
 
 		productService.addProduct(product);
@@ -52,7 +53,7 @@ public class ProductController {
 		return "forward:/product/readProduct.jsp";
 	}
 	
-	@RequestMapping("/getProduct.do")
+	@RequestMapping(value="getProductAction")
 	public String getProductAction(@RequestParam("menu") String menu,
 																@RequestParam("prodNo") String prodNo,
 																HttpServletRequest request,Model model) throws Exception {
@@ -78,7 +79,7 @@ public class ProductController {
 		return resultPage;
 	}
 	
-	@RequestMapping("/jangbaguni.do")
+	@RequestMapping(value="jangbaguniAction")
 	public String jangbaguniAction(@RequestParam("prod_no") String prodNo,HttpServletRequest request,HttpSession session,Model model) throws Exception {
 		
 		User userVO = (User)session.getAttribute("user");		
@@ -100,7 +101,7 @@ public class ProductController {
 	}
 	
 	
-	@RequestMapping("/listProduct.do")
+	@RequestMapping(value="listProductAction")
 	public String listProductAction(@RequestParam("menu") String menu,
 																@ModelAttribute("search") Search search,
 																HttpSession session,HttpServletRequest request,
@@ -138,7 +139,7 @@ public class ProductController {
 		return "forward:/product/listproduct.jsp";
 	}
 	
-	@RequestMapping("/updateProduct.do")
+	@RequestMapping(value="updateProductAction")
 	public String updateProductAction(		@ModelAttribute("product") Product product
 																			,@RequestParam("prodNo") String prodNo
 																			,HttpServletRequest request,

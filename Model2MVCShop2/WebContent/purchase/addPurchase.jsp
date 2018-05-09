@@ -2,34 +2,13 @@
     pageEncoding="EUC-KR"%>
     
       <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%-- 
-<%@page import = "com.model2.mvc.domain.Product" %> 
-<%@page import="com.model2.mvc.domain.User" %>
-<%@page import ="com.model2.mvc.domain.Purchase" %>
 
-<%
-	Purchase vo = (Purchase)request.getAttribute("purchaseVO");
-	Product product = null;
-	
-	if(vo ==null){
-	product = (Product)request.getAttribute("productVO");
-	}else{
-	product = vo.getPurchaseProd();
-	}
-	
-	User user =(User)session.getAttribute("user"); 
-	String number = (String)request.getAttribute("number");
-%>	
-  --%>
-<%@page import = "com.model2.mvc.service.domain.Product" %> 
-<%
-System.out.println("여기들어오는 VO========="+(Product)request.getAttribute("productVO"));
-	System.out.println("여기 들어오는 number ======"+request.getAttribute("number"));%>
+ 
 <html>
 <head>
 
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
-me
+
 <title>Insert title here</title>
 
 <script type="text/javascript" src="../javascript/calendar.js">
@@ -45,17 +24,17 @@ function fncAddPurchase() {
 </head>
 
 <body>
-<%-- <%if(number.equals("0")){ %> --%>
+
 <c:if test="${number=='0' }">
-<form name="addPurchase" method="post" action="/addPurchase.do">
+<form name="addPurchase" method="post" action="/purchase/addPurchaseAction">
 <input type ="hidden" name=stock value=${productVO.stock-1 } >
-<%-- <%}else if(number.equals("1")){ %> --%>
+
 </c:if>
 <c:if test="${number=='1' }">
-<form name="addPurchase" method="post" action="/updatePurchase.do">
-<%-- <input type="hidden" name ="tranNo" value=<%=vo.getTranNo() %>> --%>
+<form name="addPurchase" method="post" action="/purchase/updatePurchaseAction">
+
 <input type="hidden" name ="tranNo" value=${purchaseVO.tranNo }>
-<%-- <%} %> --%>
+
 </c:if>
 
 <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
@@ -66,14 +45,14 @@ function fncAddPurchase() {
 		<td background="/images/ct_ttl_img02.gif" width="100%" style="padding-left: 10px;">
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
-<%-- 					<%if(number.equals("0")) {%> --%>
+
 					<c:if test="${number=='0' }">
 					<td width="93%" class="ct_ttl01">상품상세조회 </td>
-<%-- 					<%}else if(number.equals("1")){ %> --%>
+
 					</c:if>
 					<c:if test="${number=='1' }">
 					<td width="93%" class="ct_ttl01">구매정보수정 </td>
-<%-- 					<%} %> --%>
+
 					</c:if>
 					<td width="20%" align="right">&nbsp;</td>
 				</tr>
@@ -85,14 +64,13 @@ function fncAddPurchase() {
 	</tr>
 </table>
 
-<%-- <input type="hidden" name="prodNo" value="<%=product.getProdNo() %>" /> --%>
+
 <input type="hidden" name="prodNo" value="${productVO.prodNo}" />
 
 <table width="600" border="0" cellspacing="0" cellpadding="0"	align="center" style="margin-top: 13px;">
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 	</tr>
-<%-- 	<%if(number.equals("0")) {%> --%>
 	<c:if test="${number=='0'}">
 	<tr>
 		<td width="300" class="ct_write">
@@ -102,7 +80,7 @@ function fncAddPurchase() {
 		<td class="ct_write01" width="299">
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
-<%-- 					<td width="105"><%=product.getProdNo() %></td> --%>
+
 					<td width="105">${productVO.prodNo}</td>
 				</tr>
 			</table>
@@ -116,7 +94,7 @@ function fncAddPurchase() {
 			상품명 <img src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
 		</td>
 		<td bgcolor="D6D6D6" width="1"></td>
-<%-- 		<td class="ct_write01"><%=product.getProdName() %></td> --%>
+
 		<td class="ct_write01">${productVO.prodName }</td>
 	</tr>
 	<tr>
@@ -127,7 +105,7 @@ function fncAddPurchase() {
 			상품상세정보 <img	src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
 		</td>
 		<td bgcolor="D6D6D6" width="1"></td>
-<%-- 		<td class="ct_write01"><%=product.getProdDetail() %></td> --%>
+
 		<td class="ct_write01">${productVO.prodDetail}</td>
 	</tr>
 	<tr>
@@ -136,7 +114,7 @@ function fncAddPurchase() {
 	<tr>
 		<td width="104" class="ct_write">제조일자</td>
 		<td bgcolor="D6D6D6" width="1"></td>
-<%-- 		<td class="ct_write01"><%=product.getManuDate() %></td> --%>
+
 		<td class="ct_write01">${productVO>manuDate }</td>
 	</tr>
 	<tr>
@@ -145,7 +123,7 @@ function fncAddPurchase() {
 	<tr>
 		<td width="104" class="ct_write">가격</td>
 		<td bgcolor="D6D6D6" width="1"></td>
-<%-- 		<td class="ct_write01"><%=product.getPrice() %></td> --%>
+
 		<td class="ct_write01">${productVO.price }</td>
 	</tr>
 	<tr>
@@ -154,22 +132,22 @@ function fncAddPurchase() {
 	<tr>
 		<td width="104" class="ct_write">등록일자</td>
 		<td bgcolor="D6D6D6" width="1"></td>
-<%-- 		<td class="ct_write01"><%=product.getRegDate() %></td> --%>
+
 		<td class="ct_write01">${productVO.manuDate }</td>
 	</tr>
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 	</tr>
-<%-- 	<%} %> --%>
+
 	</c:if>
 	<tr>
 		<td width="104" class="ct_write">
 			구매자아이디 <img 	src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
 		</td>
 		<td bgcolor="D6D6D6" width="1"></td>
-<%-- 		<td class="ct_write01"><%=user.getUserId()  %></td> --%>
+
 		<td class="ct_write01">${user.userId }</td>
-<%-- 		<input type="hidden" name="buyerId" value=<%=user.getUserId() %> /> --%>
+
 		<input type="hidden" name="buyerId" value=${user.userId } >
 	</tr>
 	<tr>
@@ -194,7 +172,7 @@ function fncAddPurchase() {
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">
 			<input type="text" name="receiverName" 	class="ct_input_g" 
-<%-- 						style="width: 100px; height: 19px" maxLength="20" value=<%=user.getUserName() %> /> --%>
+
 						style="width: 100px; height: 19px" maxLength="20" value=${user.userName } >
 		</td>
 	</tr>
@@ -205,17 +183,17 @@ function fncAddPurchase() {
 		<td width="104" class="ct_write">구매자연락처</td>
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">
-<%-- 			<%if(number.equals("0")){ %> --%>
+
 			<c:if test="${number=='0' }">
 			<input 	type="text" name="receiverPhone" class="ct_input_g" 
 							style="width: 100px; height: 19px" maxLength="20"  />
-<%-- 			<%}else if(number.equals("1")) {%> --%>
+
 			</c:if>
 			<c:if test="${number=='1' }">
 			<input 	type="text" name="receiverPhone" class="ct_input_g" 
-<%-- 							style="width: 100px; height: 19px" maxLength="20" value =<%=vo.getReceiverPhone() %> /> --%>
+
 							style="width: 100px; height: 19px" maxLength="20" value =${purchaseVO.receiverPhone } >
-<%-- 			<%} %> --%>
+
 			</c:if>
 		</td>
 	</tr>
@@ -226,18 +204,18 @@ function fncAddPurchase() {
 		<td width="104" class="ct_write">구매자주소</td>
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">
-<%-- 		<%if(number.equals("0")){ %> --%>
+
 		<c:if test="${number=='0' }">
 			<input 	type="text" name="receiverAddr" class="ct_input_g" 
-<%-- 							style="width: 100px; height: 19px" maxLength="20" 	value=<%=user.getAddr() %> /> --%>
+
 							style="width: 100px; height: 19px" maxLength="20" 	value=${user.addr } >
-<%-- 		<%}else if(number.equals("1")) {%> --%>
+
 		</c:if>
 		<c:if test="${number=='1' }">
 		<input 	type="text" name="receiverAddr" class="ct_input_g" 
-<%-- 							style="width: 100px; height: 19px" maxLength="20" 	value=<%=vo.getDivyAddr() %> /> --%>
+
 							style="width: 100px; height: 19px" maxLength="20" 	value=${purchaseVO.divyAddr } >
-<%-- 		<%} %> --%>
+
 		</c:if>
 		</td>
 	</tr>
@@ -248,17 +226,17 @@ function fncAddPurchase() {
 		<td width="104" class="ct_write">구매요청사항</td>
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">
-<%-- 		<%if(number.equals("0")){ %> --%>
+
 		<c:if test="${number=='0' }">
 			<input		type="text" name="receiverRequest" 	class="ct_input_g" 
 							style="width: 100px; height: 19px" maxLength="20" />
-<%-- 		<%}else if(number.equals("1")) {%> --%>
+
 		</c:if>
 		<c:if test="${number=='1' }">
 		<input		type="text" name="receiverRequest" 	class="ct_input_g" 
-<%-- 							style="width: 100px; height: 19px" maxLength="20" value=<%=vo.getDivyRequest() %>/> --%>
+
 							style="width: 100px; height: 19px" maxLength="20" value=${purchaseVO.divyRequest }>
-<%-- 		<%} %> --%>
+
 		</c:if>
 		</td>
 	</tr>
@@ -295,14 +273,14 @@ function fncAddPurchase() {
 						<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
 					</td>
 					<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top: 3px;">
-<%-- 						<%if(number.equals("0")){ %> --%>
+
 						<c:if test="${number=='0' }">
 						<a href="javascript:fncAddPurchase();">구매</a>
-<%-- 						<%}else if(number.equals("1")) {%> --%>
+
 						</c:if>
 						<c:if test="${number=='1' }">
 						<a href="javascript:fncAddPurchase();">수정</a>
-<%-- 						<%} %> --%>
+
 						</c:if>
 					</td>
 					<td width="14" height="23">

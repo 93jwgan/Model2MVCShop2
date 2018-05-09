@@ -26,6 +26,7 @@ import com.model2.mvc.service.purchase.PurchaseService;
 import com.model2.mvc.service.user.UserService;
 
 @Controller
+@RequestMapping("/purchase/*")
 public class PurchaseController {
 
 	@Autowired
@@ -52,7 +53,7 @@ public class PurchaseController {
 	//@Value("#{commonProperties['pageSize'] ?: 2}")
 	int pageSize;
 	
-	@RequestMapping("/addPurchaseView.do")
+	@RequestMapping(value="addPurchaseViewAction")
 	public ModelAndView addPurchaseViewAction(@RequestParam("prod_no") String prodNo,HttpServletRequest request) throws Exception {
 		
 		System.out.println("addPurchaseViewAction() start...................");
@@ -66,7 +67,7 @@ public class PurchaseController {
 		System.out.println("addPurchaseViewAction() end...................");
 		return modelAndView;
 	}
-	@RequestMapping("/addPurchase.do")
+	@RequestMapping(value="addPurchase")
 	public ModelAndView addPurchase(@ModelAttribute("purchaseVO")Purchase purchase,
 																		@ModelAttribute("product")Product product,
 																		@RequestParam("buyerId")String userId,
@@ -102,7 +103,7 @@ public class PurchaseController {
 		System.out.println("addPurchase() end...............");
 		return modelAndView;
 	}
-	@RequestMapping("/getPurchase.do")
+	@RequestMapping(value="getPurchaseAction")
 	public ModelAndView getPurchaseAction(@RequestParam("tranNo") int tranNo,HttpServletRequest request) throws Exception {
 		System.out.println("getPurchaseAction() start..............");
 		purchaseService.getPurchase(tranNo);
@@ -114,7 +115,7 @@ public class PurchaseController {
 		System.out.println("getPurchaseAction() end..............");
 		return modelAndView;
 	}
-	@RequestMapping("/listPurchase.do")
+	@RequestMapping(value="listPurchaseAction")
 	public ModelAndView listPurchaseAction(@ModelAttribute("search")Search search ,
 																					HttpSession session,HttpServletRequest request) throws Exception {
 		
@@ -147,7 +148,7 @@ public class PurchaseController {
 		System.out.println("listPurchaseAction() end............");
 		return modelAndView;
 	}
-	@RequestMapping("/updatePurchase.do")
+	@RequestMapping(value="updatePurchaseAction")
 	public ModelAndView updatePurchaseAction(@ModelAttribute("purchaseVO") Purchase purchase,
 																						@RequestParam("buyerId") String userId,
 																						@RequestParam("tranNo") int tranNo,
@@ -169,7 +170,7 @@ public class PurchaseController {
 		System.out.println("updatePurchaseAction() end.........");
 		return modelAndView;
 	}
-	@RequestMapping("/updatePurchaseView.do")
+	@RequestMapping(value="updatePurchaseViewAction")
 	public ModelAndView updatePurchaseViewAction(@RequestParam("tranNo") int tranNo,
 																									HttpServletRequest request) throws Exception {
 		
@@ -181,7 +182,7 @@ public class PurchaseController {
 		System.out.println("updatePurcahseViewAction() end..........");
 		return modelAndView;
 	}
-	@RequestMapping("/updateTranCodeByProd.do")
+	@RequestMapping(value="updateTranCodeByProdAction")
 	public ModelAndView updateTranCodeByProdAction(@ModelAttribute("purchase") Purchase purchase,
 																										@RequestParam(value = "menu",required =false) String menu,
 																											HttpServletRequest request) throws Exception {
