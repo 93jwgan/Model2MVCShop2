@@ -100,6 +100,13 @@
    				    <table width="136" height="20" border="0" cellpadding="0" cellspacing="0">
                        <tr> 
                          <td width="56">
+                         	<a href="kakaologinn.jsp">
+                         		<img src="/images/kakao/kakao_login_btn_small.png" width="56" height="20" border="0"/>
+                         	</a>
+                         </td>
+                       
+                       
+                         <td width="56">
                          	<a href="javascript:fncLogin();">
                          		<img src="/images/btn_login.gif" width="56" height="20" border="0"/>
                          	</a>

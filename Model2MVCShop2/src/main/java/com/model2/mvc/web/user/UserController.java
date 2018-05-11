@@ -11,7 +11,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.model2.mvc.common.Page;
@@ -112,16 +114,34 @@ public class UserController {
 		return "redirect:/user/loginView.jsp";
 	}
 	
-	@RequestMapping(value="loginAction")
+	@RequestMapping(value="loginAction" ,method=RequestMethod.POST)
 	public String login(@ModelAttribute("user") User user , HttpSession session ) throws Exception{
 		
 		System.out.println("/login.do");
 		//Business Logic
+		
 		User dbUser=userService.getUser(user.getUserId());
 		
-		if( user.getPassword().equals(dbUser.getPassword())){
-			session.setAttribute("user", dbUser);
-		}
+//		if( user.getPassword().equals(dbUser.getPassword())){
+//			session.setAttribute("user", dbUser);
+//		}
+		
+		return "redirect:/index.jsp";
+	}
+	
+	
+	
+	@RequestMapping(value="loginAction/{userId}" ,method=RequestMethod.POST)
+	public String login(@ModelAttribute("user") User user , HttpSession session,@PathVariable String userId ) throws Exception{
+		
+		System.out.println("/login.do");
+		//Business Logic
+		System.out.println("user Id = == = = = = = =" +userId);
+		User dbUser=userService.getUser(user.getUserId());
+		
+//		if( user.getPassword().equals(dbUser.getPassword())){
+//			session.setAttribute("user", dbUser);
+//		}
 		
 		return "redirect:/index.jsp";
 	}
