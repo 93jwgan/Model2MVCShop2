@@ -122,9 +122,9 @@ public class UserController {
 		
 		User dbUser=userService.getUser(user.getUserId());
 		
-//		if( user.getPassword().equals(dbUser.getPassword())){
-//			session.setAttribute("user", dbUser);
-//		}
+		if( user.getPassword().equals(dbUser.getPassword())){
+			session.setAttribute("user", dbUser);
+		}
 		
 		return "redirect:/index.jsp";
 	}

@@ -28,14 +28,14 @@
       
 	 <mvc:annotation-driven />
 	 
-	 	<mvc:interceptors>
+<!-- 	 	<mvc:interceptors> -->
 		
-   		<mvc:interceptor>
-			<mvc:mapping path="/*/**"/>
-			<bean class="com.model2.mvc.common.web.LogonCheckInterceptor" />
-   		</mvc:interceptor>
+<!--    		<mvc:interceptor> -->
+<!-- 			<mvc:mapping path="/*/**"/> -->
+<!-- 			<bean class="com.model2.mvc.common.web.LogonCheckInterceptor" /> -->
+<!--    		</mvc:interceptor> -->
 
-   	</mvc:interceptors>
+<!--    	</mvc:interceptors> -->
 
 	 
  	<mvc:resources mapping="/css/**" location="/css/" />

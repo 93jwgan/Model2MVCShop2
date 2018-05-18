@@ -13,7 +13,7 @@
 <body>
 
 
- <a id="kakao-login-btn"></a>
+ <a id="kakao-login-btn" image="  " Onclick=" "></a>
     <a href="http://developers.kakao.com/logout"></a>
     <script type='text/javascript'>
       
@@ -26,7 +26,8 @@
         	  $.ajax({
         		type:"post",
         		dataType:"json",
-        		url:"/user/loginAction/user02"
+        		url:"/user/loginAction/"
+        		data : {JSON.parse(authObj).acces_token}
         		
         	  	
         	  })

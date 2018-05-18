@@ -5,9 +5,29 @@
 <title>로그인 화면</title>
 
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <script type="text/javascript">
 
+	
+	function kakao(){
+		Kakao.init('0d97f53ee557d3f90681bbd4eba9d38f');
+		alert("aaaaaaaaaaaaaaaaaa");
+		Kakao.Auth.login({
+		    success: function(authObj) {	        	 
+		    	alert(JSON.stringify(authObj));
+	          },	
+	          fail: function(err) {
+	              alert(JSON.stringify(err));
+	           }
+		})
+		
+		
+		
+	}
+
+	
 	function fncLogin() {
 		var id=document.loginForm.userId.value;
 		var pw=document.loginForm.password.value;
@@ -37,6 +57,8 @@
 <body bgcolor="#ffffff" text="#000000" >
 
 <form name="loginForm"  method="post" action="/user/loginAction" target="_parent">
+
+<input type="hidden" name="token" value=""/>
 
 <div align="center">
 
@@ -100,7 +122,7 @@
    				    <table width="136" height="20" border="0" cellpadding="0" cellspacing="0">
                        <tr> 
                          <td width="56">
-                         	<a href="kakaologinn.jsp">
+                         	<a href="javascript:kakao()">
                          		<img src="/images/kakao/kakao_login_btn_small.png" width="56" height="20" border="0"/>
                          	</a>
                          </td>
