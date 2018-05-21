@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
     
@@ -11,22 +12,42 @@
 
 <title>Insert title here</title>
 
+<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="../javascript/calendar.js">
 </script>
 
+
 <script type="text/javascript">
-<!--
+
+
+$(function(){
+	$("td.ct_btn01:contains('구매')").on("click",function(){
+		fncAddPurchase();
+	})
+	
+	$("td.ct_btn01:contains('수정')").on("click",function(){
+		fncUpdatePurchase()
+	})
+	$("td.ct_btn01:contains('취소')").on("click",function(){
+		history.go(-1);
+	})
+	
+})
+
 function fncAddPurchase() {
-	document.addPurchase.submit();
+	$("form").attr("method","POST").attr("action","/purchase/addPurchase").submit();
 }
--->
+function fncUpdatePurchase(){
+	$("form").attr("method","POST").attr("action","/purchase/updatePurchaseAction").submit();
+}
+
 </script>
 </head>
 
 <body>
 
 <c:if test="${number=='0' }">
-<form name="addPurchase" method="post" action="/purchase/addPurchaseAction">
+<form name="addPurchase" >
 <input type ="hidden" name=stock value=${productVO.stock-1 } >
 
 </c:if>
@@ -275,11 +296,11 @@ function fncAddPurchase() {
 					<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top: 3px;">
 
 						<c:if test="${number=='0' }">
-						<a href="javascript:fncAddPurchase();">구매</a>
+						구매
 
 						</c:if>
 						<c:if test="${number=='1' }">
-						<a href="javascript:fncAddPurchase();">수정</a>
+						수정
 
 						</c:if>
 					</td>
@@ -291,7 +312,7 @@ function fncAddPurchase() {
 						<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
 					</td>
 					<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top: 3px;">
-						<a href="javascript:history.go(-1)">취소</a>
+						취소
 					</td>
 					<td width="14" height="23">
 						<img src="/images/ct_btnbg03.gif" width="14" height="23"/>

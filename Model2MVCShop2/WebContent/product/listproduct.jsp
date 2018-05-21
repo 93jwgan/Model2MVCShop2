@@ -9,12 +9,48 @@
 <title>상품 목록조회</title>
 
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
-
+<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script type="text/javascript">
+$(function(){
 
-function fncGetUserList(currentPage){
-	document.getElementById("currentPage").value = currentPage;
-	document.detailForm.submit();
+	$("td.ct_btn01:contains('검색')").on("click",function(){
+		
+		fncGetUserList(1);
+		
+	});
+	$("tr.ct_list_pop td:nth-child(3)").on("click",function(){
+// 		alert("iiii::::"+$(this).text().trim());
+// 		var number = Number($(this).parent().children().eq(0).text().trim());
+// 		alert("====="+number);
+		
+		var prodNo = Number($(this).children().eq(0).val());
+		
+		
+		var viewNumber = Number($(this).children().eq(1).val());
+		
+		
+		
+
+	if(${menu=='search'}){
+		self.location="/product/getProductAction?prodNo="+prodNo+"&menu=search&viewNumber="+(viewNumber+1);
+		
+	}else if(${menu=='manage'}){
+		self.location="/product/getProductAction?prodNo="+prodNo+"&menu=search";
+	}
+	});
+	$("td:contains('배송하기')").on("click",function(){
+		var number = $(this).parent().children().eq(0).text().trim();
+		//alert("number == "+number);
+		
+	});
+	
+	
+	
+})
+
+function fncGetUserList(currentPage) {
+	$("#currentPage").val(currentPage);
+   	$("form").attr("method","POST").attr("action","/product/listProductAction").submit();
 }
 
 
@@ -26,7 +62,7 @@ function fncGetUserList(currentPage){
 <div style="width:98%; margin-left:10px;">
 
 <c:if test="${menu=='search'}">
-<form name="detailForm" action="/product/listProductAction?" method="post">
+<form name="detailForm">
 
 </c:if>
 <c:if test="${menu=='manage'}">
@@ -122,7 +158,7 @@ function fncGetUserList(currentPage){
 					</td>
 					<input type ="hidden" name="menu" value=${menu }>
 					<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;">
-						<a href="javascript:fncGetUserList('1');">검색</a>
+						검색
 					</td>
 					<td width="14" height="23">
 						<img src="/images/ct_btnbg03.gif" width="14" height="23">
@@ -155,85 +191,32 @@ function fncGetUserList(currentPage){
 	<tr>
 		<td colspan="11" bgcolor="808285" height="1"></td>
 	</tr>
+		<c:set var="i" value="0"/>
 		<c:forEach var="list" items="${map.list}">
-		
+		<c:set var="i" value="${ i+1 }" />
 	<tr class="ct_list_pop">
 
-			<td align="center">${list.purchaseProd.prodNo}</td>
+			<td align="center">${i}</td>
 
 
-			<c:if test="${list.tranCode.trim()==null}">
-				<td></td>
 
-				<c:if test="${menu =='search'}">
 
-				<td align="left"><a href="/product/getProductAction?prodNo=${list.purchaseProd.prodNo}&menu=search&viewNumber=${list.purchaseProd.viewNumber+1}">${list.purchaseProd.prodName } trancode=null</td>
-
-				</c:if>
-				<c:if test="${menu=='manage'}">
-
-				<td align="left"><a href="/product/getProductAction?prodNo=${list.purchaseProd.prodNo}&menu=manage">${list.purchaseProd.prodName }</a>
-
-				</c:if>
-		
-
-			</c:if>
-			<c:if test="${list.tranCode.trim()=='0' }">
-				<td></td>
-
-				<c:if test="${menu=='search'}">
-				
-				
-
-				<td align="left"><a href="/product/getProductAction?prodNo=${list.purchaseProd.prodNo}&menu=search&viewNumber=${list.purchaseProd.viewNumber+1}">${list.purchaseProd.prodName} trancode=0</a></td>
-			
-
-				</c:if>
-				<c:if test="${menu=='manage'}">
-
-				<td align="left"><a href="/product/getProductAction?prodNo=${list.purchaseProd.prodNo}&menu=manage">${list.purchaseProd.prodName}</a></td>
-				
-					
-		
-			</c:if>
-	
-
-			</c:if>
-			<c:if test="${list.tranCode.trim()=='1'}">
-		
-		<td></td>
-
-					<c:if test="${menu=='search' }">
-				
-				
-
-				<td align="left"><a href="/product/getProductAction?prodNo=${list.purchaseProd.prodNo}&menu=search&viewNumber=${list.purchaseProd.viewNumber+1}">${list.purchaseProd.prodName} trancode=1</a></td>
-				
-
-					</c:if>
-					<c:if test="${menu=='manage'}">
-
-					<td align="left"><a href="/product/getProductAction?prodNo=${list.purchaseProd.prodNo}]&menu=manage">${list.purchaseProd.prodName}</a></td>
-				
-			
-
-			</c:if>
-
-			</c:if>
-			<c:if test="${list.tranCode.trim()=='2'}">
 		<td></td>
 
 				<c:if test="${menu=='search' }">
 				
 				
 
-					<td align="left"><a href="/product/getProductAction?prodNo=${list.purchaseProd.prodNo}&menu=search&viewNumber=${list.purchaseProd.viewNumber+1}">${list.purchaseProd.prodName} trancode=2</a></td>
+					<td align="left">${list.purchaseProd.prodName}
+					<input type="hidden" name=${list.purchaseProd.prodNo } value="${list.purchaseProd.prodNo}">
+					<input type="hidden" name=${list.purchaseProd.viewNumber } value = "${list.purchaseProd.viewNumber }">
+					</td>
 				
 
 				</c:if>
 				<c:if test="${menu=='manage'}">
 
-				<td align="left"><a href="/product/getProductAction?prodNo=${list.purchaseProd.prodNo}&menu=manage">${list.purchaseProd.prodName }</a></td>
+				<td align="left">${list.purchaseProd.prodName }</td>
 				
 			
 
@@ -241,7 +224,7 @@ function fncGetUserList(currentPage){
 		
 		
 
-		</c:if>
+
 		
 		
 		
@@ -280,7 +263,7 @@ function fncGetUserList(currentPage){
 			<c:if test="${list.tranCode.trim() =='0' }">			
 			<td align="left">
 	
-			구매 완료 <a href="/purchase/updateTranCodeByProdAction?tranNo=${list.tranNo}&tranCode=1&menu=manage">배송하기</a>
+			구매 완료 배송하기
 	
 			</td>
 			</c:if>

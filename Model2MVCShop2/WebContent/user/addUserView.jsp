@@ -5,15 +5,15 @@
 <title>회원가입</title>
 
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
-
+<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script type="text/javascript">
 
-function fncAddUser() {
-	// Form 유효성 검증
-	var id=document.detailForm.userId.value;
-	var pw=document.detailForm.password.value;
-	var pw_confirm=document.detailForm.password2.value;
-	var name=document.detailForm.userName.value;
+function fncAddUser() {	
+	
+	var id=$("input[name='userId']").val();
+	var pw=$("input[name='password']").val();
+	var pw_confirm=$("input[name='password2']").val();
+	var name=$("input[name='userName']").val();
 	
 	if(id == null || id.length <1){
 		alert("아이디는 반드시 입력하셔야 합니다.");
@@ -34,29 +34,47 @@ function fncAddUser() {
 	
 	if(document.detailForm.password.value != document.detailForm.password2.value) {
 		alert("비밀번호 확인이 일치하지 않습니다.");
-		document.detailForm.password2.focus();
+		$("input:text[name='password2']").focus();
+		
 		return;
 	}
 		
-	if(document.detailForm.phone2.value != "" && document.detailForm.phone2.value != "") {
-		document.detailForm.phone.value = document.detailForm.phone1.value + "-" + document.detailForm.phone2.value + "-" + document.detailForm.phone3.value;
-	} else {
-		document.detailForm.phone.value = "";
+	var value = "";	
+	if( $("input:text[name='phone2']").val() != ""  &&  $("input:text[name='phone3']").val() != "") {
+		var value = $("option:selected").val() + "-" 
+							+ $("input[name='phone2']").val() + "-" 
+							+ $("input[name='phone3']").val();
 	}
-		
-	document.detailForm.action='/user/addUserAction';
-	document.detailForm.submit();
+	$("input:hidden[name='phone']").val( value );	
+	
+	$("form").attr("method" , "POST").attr("action" , "/user/addUserAction").submit();
+	
 }
 
-function check_email(frm) {
-	alert
-	var email=document.detailForm.email.value;
-    if(email != "" && (email.indexOf('@') < 1 || email.indexOf('.') == -1)){
-    	alert("이메일 형식이 아닙니다.");
-		return false;
-    }
-    return true;
-}
+	$(function(){
+		$( "td.ct_btn01:contains('가입')" ).on("click" , function() {
+			fncAddUser();
+		});
+	})
+
+	$(function() {
+		 $( "td.ct_btn01:contains('취소')" ).on("click" , function() {
+			 $("form")[0].reset();
+			});
+	})
+	
+ 	$(function() {
+			 
+			 $("input[name='email']").on("change" , function() {
+				
+				 var email=$("input[name='email']").val();
+			    
+				 if(email != "" && (email.indexOf('@') < 1 || email.indexOf('.') == -1) ){
+			    	alert("이메일 형식이 아닙니다.");
+			     }
+			});
+			 
+		});	
 
 function checkSsn() {
 	var ssn1, ssn2; 
@@ -88,21 +106,27 @@ function PortalJuminCheck(fieldValue){
 	return ((11 - mod) % 10 == last) ? true : false;
 }
 
-function fncCheckDuplication() {
-	popWin 
-		= window.open("/user/checkDuplication.jsp","popWin", "left=300,top=200,width=300,height=200,marginwidth=0,marginheight=0,scrollbars=no,scrolling=no,menubar=no,resizable=no");
-}
+$(function() {
+	
+		
+	 $("td.ct_btn:contains('ID중복확인')").on("click" , function() {
+		
+		popWin 
+		= window.open("/user/checkDuplication.jsp",
+									"popWin", 
+									"left=300,top=200,width=300,height=200,marginwidth=0,marginheight=0,"+
+									"scrollbars=no,scrolling=no,menubar=no,resizable=no");
+	});
+});	
 
-function resetData() {
-	document.detailForm.reset();
-}
+
 
 </script>
 </head>
 
 <body bgcolor="#ffffff" text="#000000">
 
-<form name="detailForm"  method="post" >
+<form name="detailForm"  >
 
 <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
 	<tr>
@@ -148,7 +172,7 @@ function resetData() {
 									<img src="/images/ct_btng01.gif" width="4" height="21"/>
 								</td>
 								<td align="center" background="/images/ct_btng02.gif" class="ct_btn" style="padding-top:3px;">
-									<a href="javascript:fncCheckDuplication();" id="btnCmfID">ID중복확인</a>
+									ID중복확인
 								</td>
 								<td width="4" height="21">
 									<img src="/images/ct_btng03.gif" width="4" height="21"/>
@@ -270,7 +294,7 @@ function resetData() {
 				<tr>
 					<td height="26">
 						<input 	type="text" name="email" class="ct_input_g" 
-										style="width:100px; height:19px" onChange="check_email(this.form);" />
+										style="width:100px; height:19px"  />
 					</td>
 				</tr>
 			</table>
@@ -294,7 +318,7 @@ function resetData() {
 						<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
 					</td>
 					<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;">
-						<a href="javascript:fncAddUser();">가입</a>
+						가입
 					</td>
 					<td width="14" height="23">
 						<img src="/images/ct_btnbg03.gif" width="14" height="23"/>
@@ -304,7 +328,7 @@ function resetData() {
 						<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
 					</td>
 					<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;">
-						<a href="javascript:resetData();">취소</a>
+						취소
 					</td>
 					<td width="14" height="23">
 						<img src="/images/ct_btnbg03.gif" width="14" height="23"/>

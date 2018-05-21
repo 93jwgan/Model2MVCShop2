@@ -9,11 +9,31 @@
 <title>구매 목록조회</title>
 
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
-
+<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script type="text/javascript">
-function fncGetUserList(currentPage){
-	document.getElementById("currentPage").value = currentPage;
-	document.detailForm.submit();
+
+
+	$(function(){
+		$("tr.ct_list_pop td:nth-child(3)").on("click",function(){
+			self.location = "/user/getUserAction?userId="+$(this).text().trim();
+		})
+		$("tr.ct_list_pop td:nth-child(5)").on("click",function(){
+			
+			self.location = "/product/getProductAction?menu=purchase&prodNo="+$(this).children().eq(0).val().trim();
+		})	
+		$("td:contains('물건도착')").on("click",function(){
+			self.location="/purchase/updateTranCodeByProdAction?tranNo="+$(this).children().eq(0).val().trim()+"&tranCode=2";
+		})
+		
+		$("td:contains('수정하기')").on("click",function(){
+			self.location="/purchase/getPurchaseAction?tranNo="+$(this).children().eq(0).val().trim();	
+		})
+	})
+
+
+function fncGetUserList(currentPage) {
+	$("#currentPage").val(currentPage);
+   	$("form").attr("method","POST").attr("action","/purchase/listPurchaseAction").submit();
 }
 </script>
 </head>
@@ -73,13 +93,15 @@ function fncGetUserList(currentPage){
 		<td></td>
 		<td align="left">
 
-			<a href="/user/getUserAction?userId=${list.buyer.userId }">${list.buyer.userId }</a>
+			${list.buyer.userId }
 		</td>
 		<td></td>
 
 		
 
-			<td align="left"><a href="/product/getProductAction?menu=purchase&prodNo=${list.purchaseProd.prodNo }">${list.purchaseProd.prodName }</a></td>
+			<td align="left">${list.purchaseProd.prodName }
+			<input type="hidden" name = ${list.purchaseProd.prodNo } value = "${list.purchaseProd.prodNo }">
+			</td>
 		<td></td>
 
 		<td align="left">${list.receiverPhone }</td>
@@ -101,7 +123,9 @@ function fncGetUserList(currentPage){
 				
 					배송중
 
-					상태 입니다. <a href="/purchase/updateTranCodeByProdAction?tranNo=${list.tranNo }&tranCode=2">물건도착</a></td>
+					상태 입니다. 물건도착
+					<input type="hidden" name=${list.tranNo } value = "${list.tranNo }"></td>
+					
 				
 		<td></td>
 		<td align="left">
@@ -121,7 +145,8 @@ function fncGetUserList(currentPage){
 
 			
 			<c:if test="${list.tranCode.trim()=='0' }">
-			<td align="left"><a href="/purchase/getPurchaseAction?tranNo=${list.tranNo }">수정하기</a>
+			<td align="left">수정하기
+			<input type="hidden" name="${list.tranNo }" value="${list.tranNo }">
 			</c:if>
 			<c:if test="${list.tranCode.trim()=='1'||list.tranCode.trim()=='2' }">
 			<td align="left">수정불가능</a>

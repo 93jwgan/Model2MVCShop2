@@ -7,6 +7,26 @@
 <title>회원정보조회</title>
 
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
+<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script type="text/javascript">
+
+
+	$(function(){
+		$("td.ct_btn01.contains('수정')").on("click",function(){
+			
+		self.location="/user/updateUserViewAction?userId=${user.userId}";
+		})		
+	})
+	
+	$(function(){
+		$("td.ct_btn01.contains('확인')").on("click",function(){
+			history.go(-1);
+		})
+	})
+
+</script>
+
+
 
 </head>
 

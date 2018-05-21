@@ -11,18 +11,46 @@
 
 <script type="text/javascript" src="../javascript/calendar.js">
 </script>
-
+<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script type="text/javascript">
-<!--
+
+
+
+$(function(){
+
+	var menu = $("input[name = 'menu']").val();
+	alert("menu = "+menu);
+	
+	$( "td.ct_btn01:contains('등록')" ).on("click" , function() {
+		fncAddProduct();
+	})	
+	$( "td.ct_btn01:contains('수정')" ).on("click" , function() {
+		fncAddProduct();
+	})
+	
+	
+	 $( "td.ct_btn01:contains('취소')" ).on("click" , function() {
+		if(menu==null){
+		 $("form")[0].reset();
+		}else{
+			history.go(-1);
+		}
+		
+	})
+})
+
 
 function fncAddProduct(){
 	//Form 유효성 검증
- 	var name = document.detailForm.prodName.value;
-	var detail = document.detailForm.prodDetail.value;
-	var manuDate = document.detailForm.manuDate.value;
-	var price = document.detailForm.price.value;
-	var number = document.detailForm.prodNo.value;
-
+	
+	
+	var name = $("input[name = 'prodName']").val();
+	var detail = $("input[name = 'prodDetail']").val();
+	var manuDate = $("input[name = 'manuDate']").val();
+	var price = $("input[name = 'price']").val();	
+	var number = $("input[name = 'prodNo']").val();
+	
+	
 	if(name == null || name.length<1){
 		alert("상품명은 반드시 입력하여야 합니다.");
 		return;
@@ -42,28 +70,27 @@ function fncAddProduct(){
 	
 	
 	if(number == "1" ){
-		document.detailForm.action='/product/addProductAction'	
+		document.detailForm.action='/product/addProductAction'
+		$("form").attr("method","POST").attr("action","/product/addProductAction").submit();
 	}else{
 		document.detailForm.action='/product/updateProductAction';
+		$("form").attr("method","POST").attr("action","/product/updateProductAction").submit();
 	}
 	
-	document.detailForm.submit();
 }
 
-function resetData(){
-	document.detailForm.reset();
-}
+	
 
 
 
--->
+
 </script>
 </head>
 
 <body bgcolor="#ffffff" text="#000000">
 
-<form name="detailForm" method="post" >
-
+<form name="detailForm" >
+<input type="hidden" name ="menu" value="${menu}">
 <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
 	<tr>
 		<td width="15" height="37">
@@ -181,12 +208,12 @@ function resetData(){
 
 					<c:if test="${menu==null }">
 					<input type="hidden" name="prodNo" value="1" >
-					<a href="javascript:fncAddProduct();">등록</a>
+					등록
 					</c:if>
 
 					<c:if test="${menu=='manage'}">
 					<input type="hidden" name="prodNo" value="${productVO.prodNo }">
-					<a href="javascript:fncAddProduct();">수정</a>
+					수정
 
 					</c:if>
 				</td>
@@ -199,13 +226,9 @@ function resetData(){
 				</td>
 				<td background="/images/ct_btnbg02.gif" class="ct_btn01"	 style="padding-top: 3px;">
 
-						<c:if test="${menu==null }">
-						<a href="javascript:resetData();">취소</a>
-						</c:if>
+						
+						취소
 
-						<c:if test="${menu=='manage' }">
-						<a href="javascript:history.go(-1)">취소</a>
-						</c:if>
 
 				</td>
 				<td width="14" height="23">

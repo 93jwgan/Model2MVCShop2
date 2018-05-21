@@ -8,12 +8,47 @@
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
 
 <title>Insert title here</title>
+<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script type="text/javascript">
+
+	$(function(){
+		
+		var menu = $("input[name = 'menu']").val();
+		alert("menu = "+menu);
+		
+		$( "td.ct_btn01:contains('장바구니담기')" ).on("click" , function() {
+			self.location = "/product/jangbaguniAction?prod_no="+${productVO.prodNo};
+		})
+		$( "td.ct_btn01:contains('구매')" ).on("click" , function() {
+			self.location = "/purchase/addPurchaseViewAction?prod_no="+${productVO.prodNo};
+		})
+		$( "td.ct_btn01:contains('이전')" ).on("click" , function() {
+			history.go(-1);
+		})
+		
+			
+	 $( "td.ct_btn01:contains('확인')" ).on("click" , function() {
+		if(menu==null){
+		 self.location="/product/listProductAction?menu=manage";
+		}else{
+		self.location="/product/listProductAction?menu=search";
+		}
+		
+	})
+		
+	})
+
+</script>
+
+
+
+
 </head>
 
 <body bgcolor="#ffffff" text="#000000">
 
 <form name="detailForm" method="post">
-
+<input type="hidden" name ="menu" value="${menu}">
 <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
 	<tr>
 		<td width="15" height="37"><img src="/images/ct_ttl_img01.gif"	width="15" height="37"></td>
@@ -135,7 +170,7 @@
 				
 					<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top: 3px;">
 						
-					<a href="/product/jangbaguniAction?prod_no=${productVO.prodNo}">장바구니담기</a>
+					장바구니담기
 					
 				</td>
 				
@@ -151,7 +186,7 @@
 				
 					<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top: 3px;">
 						
-					<a href="/purchase/addPurchaseViewAction?prod_no=${productVO.prodNo}">구매</a>
+					구매
 					
 				</td>
 				</c:if>
@@ -190,15 +225,11 @@
 				
 				<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top: 3px;">
 
-						<c:if test="${menu==null }">
-						<a href="/product/listProductAction?menu=manage">확인</a>
-						</c:if>
-
-						<c:if test="${menu=='search'}">
-						<a href="/product/listProductAction?menu=search">확인</a>
-						</c:if>
+					
+						확인
+						
 						<c:if test="${menu=='purchase' }">
-						<a href="javascript:history.go(-1)">이전</a>
+						이전
 						</c:if>
 
 				</td>

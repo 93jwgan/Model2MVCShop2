@@ -27,28 +27,45 @@
 		
 	}
 
-	
-	function fncLogin() {
-		var id=document.loginForm.userId.value;
-		var pw=document.loginForm.password.value;
-		if(id == null || id.length <1) {
-			alert('ID 를 입력하지 않으셨습니다.');
-			document.loginForm.userId.focus();
-			return;
-		}
+	$( function() {
 		
-		if(pw == null || pw.length <1) {
-			alert('패스워드를 입력하지 않으셨습니다.');
-			document.loginForm.password.focus();
-			return;
-		}
-	    document.loginForm.submit();
-	}
+		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+		$("#userId").focus();
+		
+		//==> 추가된부분 : "Login"  Event 연결
+		$("img[src='/images/btn_login.gif']").on("click" , function() {
+
+			var id=$("input:text").val();
+			var pw=$("input:password").val();
+			
+			if(id == null || id.length <1) {
+				alert('ID 를 입력하지 않으셨습니다.');
+				$("input:text").focus();
+				return;
+			}
+			
+			if(pw == null || pw.length <1) {
+				alert('패스워드를 입력하지 않으셨습니다.');
+				$("input:password").focus();
+				return;
+			}
+			
+			//$("form").attr("method" , "POST");
+			//$("form").attr("action" , "/login.do");
+			//$("form").attr("target" , "_parent");
+		    //$("form").submit();
+			//==> 위의 4실행문과 같은의미			    
+			$("form").attr("method","POST").attr("action","/user/loginAction").attr("target","_parent").submit();
+			
+		});
+	});
 	
-	//Call Back Method 이용 onload 시 Event 처리
-	window.onload = function(){
-		document.getElementById("userId").focus();
-	}
+	$( function() {
+		//==> 추가된부분 : "addUser"  Event 연결
+		$("img[src='/images/btn_add.gif']").on("click" , function() {
+			self.location = "/user/addUserViewAction"
+		});
+	});
 
 </script>
 
@@ -56,7 +73,7 @@
 
 <body bgcolor="#ffffff" text="#000000" >
 
-<form name="loginForm"  method="post" action="/user/loginAction" target="_parent">
+<form name="loginForm">
 
 <input type="hidden" name="token" value=""/>
 
@@ -129,15 +146,15 @@
                        
                        
                          <td width="56">
-                         	<a href="javascript:fncLogin();">
+                         	
                          		<img src="/images/btn_login.gif" width="56" height="20" border="0"/>
                          	</a>
                          </td>
                          <td width="10">&nbsp;</td>
                          <td width="70">
-                         	<a href="addUserView.jsp;">
+                         	
                          		<img src="/images/btn_add.gif" width="70" height="20" border="0">
-                         	</a>
+                         	
                          </td>
                        </tr>
                      </table>

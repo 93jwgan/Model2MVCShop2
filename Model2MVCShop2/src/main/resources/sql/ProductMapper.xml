@@ -105,7 +105,7 @@
 	<update id="updateProduct" parameterType="product">
 		UPDATE PRODUCT
 		SET
-		prod_name=#{prodName},prod_detail=#{prodDetail},manufacture_day=#{manuDate},price=#{price}
+		prod_name=#{prodName},prod_detail=#{prodDetail},manufacture_day=#{manuDate},price=#{price},stock=#{stock}
 		WHERE prod_no=#{prodNo}
 	</update>
 
