@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.model2.mvc.common.Page;
 import com.model2.mvc.common.Search;
+import com.model2.mvc.service.domain.Kakao;
 import com.model2.mvc.service.domain.User;
 import com.model2.mvc.service.user.UserService;
 
@@ -47,6 +48,13 @@ public class UserController {
 	@Value("#{commonProperties['pageSize']}")
 	//@Value("#{commonProperties['pageSize'] ?: 2}")
 	int pageSize;
+	
+	
+	
+	
+
+	
+	
 	
 	
 	@RequestMapping("addUserViewAction")
@@ -125,6 +133,21 @@ public class UserController {
 		if( user.getPassword().equals(dbUser.getPassword())){
 			session.setAttribute("user", dbUser);
 		}
+		
+		return "redirect:/index.jsp";
+	}
+	@RequestMapping(value="loginAction" ,method=RequestMethod.GET)
+	public String kakaoLogin(HttpServletRequest request,@RequestParam("userId") String userId , HttpSession session ) throws Exception{
+		
+		System.out.println("kakaoLogin start()....");
+		System.out.println("Request.getQuery : "+request.getQueryString());
+		//Business Logic
+		System.out.println("userId : "+userId);
+		User dbUser=userService.getUser(userId);
+		
+		
+			session.setAttribute("user", dbUser);
+		
 		
 		return "redirect:/index.jsp";
 	}

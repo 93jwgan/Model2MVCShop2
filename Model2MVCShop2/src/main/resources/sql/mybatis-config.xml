@@ -19,6 +19,7 @@
 		<typeAlias alias="product" type="com.model2.mvc.service.domain.Product" />
 		<typeAlias alias="purchase" type="com.model2.mvc.service.domain.Purchase" />
 		<typeAlias alias="baguni" type="com.model2.mvc.service.domain.Baguni" />	
+		<typeAlias alias="kakao" type="com.model2.mvc.service.domain.Kakao"/>
 	</typeAliases>
 	
 	 <!-- SQL Definition :: file include -->

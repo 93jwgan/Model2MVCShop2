@@ -12,11 +12,41 @@
 
 	
 	function kakao(){
+		
+		
 		Kakao.init('0d97f53ee557d3f90681bbd4eba9d38f');
-		alert("aaaaaaaaaaaaaaaaaa");
+		
 		Kakao.Auth.login({
 		    success: function(authObj) {	        	 
-		    	alert(JSON.stringify(authObj));
+		    	
+		    	
+		    	Kakao.API.request({
+		    		url:'/v1/user/me',
+		    		success:function(res){
+						
+		    			$.ajax({
+				    		type:"GET",
+				    		dataType:"json",
+				    		url:"/user/json/kakaoId",
+				    		data : {"name" : res.id},
+				    		success:function(JSONData,status){
+				    			
+				    			$("input[name='userId']").val(JSONData.userId);
+				    			
+				    			if(JSONData.userId !=null){
+				    				$("form").attr("method","GET").attr("action","/user/loginAction").attr("target","_parent").submit();
+				    			}else{
+				    				
+				    				window.open("/user/kakao.jsp?kakaoId="+res.id,"popWin", 
+											"left=300,top=200,width=300,height=200,marginwidth=0,marginheight=0,"+
+											"scrollbars=no,scrolling=no,menubar=no,resizable=no")
+// 				    				self.location="addUserView.jsp";
+				    			}
+				    		}
+				    	})
+		    		}
+		    	})
+
 	          },	
 	          fail: function(err) {
 	              alert(JSON.stringify(err));
@@ -74,8 +104,6 @@
 <body bgcolor="#ffffff" text="#000000" >
 
 <form name="loginForm">
-
-<input type="hidden" name="token" value=""/>
 
 <div align="center">
 

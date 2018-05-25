@@ -27,7 +27,7 @@
 		<result property="purchaseProd.prodDetail"   column="prod_detail"      jdbcType="VARCHAR"/>
 		<result property="purchaseProd.manuDate"     column="manufacture_day"  jdbcType="VARCHAR"/>
 		<result property="purchaseProd.price"        column="price"            jdbcType="NUMERIC"/>
-		<result property="purchaseProd.fileName"     column="image_file"       jdbcType="VARCHAR"/>
+		<result property="purchaseProd.file"     column="image_file"       jdbcType="VARCHAR"/>
 		<result property="purchaseProd.regDate"      column="reg_date"    jdbcType="DATE"/>
 		<result property="purchaseProd.proTranCode" column="TRAN_STATUS_CODE" jdbcType="VARCHAR"/>
 		<result property="purchaseProd.viewNumber"   column="viewnumber"       jdbcType="NUMERIC" />
@@ -42,7 +42,7 @@
 		<result property="prodDetail"   column="prod_detail"      jdbcType="VARCHAR"/>
 		<result property="manuDate"     column="manufacture_day"  jdbcType="VARCHAR"/>
 		<result property="price"        column="price"            jdbcType="NUMERIC"/>
-		<result property="fileName"     column="image_file"       jdbcType="VARCHAR"/>
+		<result property="file"     column="image_file"       jdbcType="VARCHAR"/>
 		<result property="regDate"      column="reg_date"    jdbcType="DATE"/>
 		<result property="proTranCode" column="TRAN_STATUS_CODE" jdbcType="VARCHAR"/>
 		<result property="viewNumber"   column="viewnumber"       jdbcType="NUMERIC" />
@@ -90,8 +90,8 @@
 	<insert id="insertProduct" parameterType="product">
 		INSERT
 		INTO
-		product(prod_no,prod_name,prod_detail,manufacture_day,price,reg_date,stock)
-		VALUES(seq_product_prod_no.nextval,#{prodName},#{prodDetail},#{manuDate},#{price},SYSDATE,#{stock})
+		product(prod_no,prod_name,prod_detail,manufacture_day,price,reg_date,stock,IMAGE_FILE)
+		VALUES(seq_product_prod_no.nextval,#{prodName},#{prodDetail},#{manuDate},#{price},SYSDATE,#{stock},#{fileName})
 	</insert>
 
 

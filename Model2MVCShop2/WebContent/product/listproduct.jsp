@@ -29,13 +29,15 @@ $(function(){
 		var viewNumber = Number($(this).children().eq(1).val());
 		
 		
-		
+		alert("prodNo : "+[prodNo])
 
 	if(${menu=='search'}){
+		alert("search");
 		self.location="/product/getProductAction?prodNo="+prodNo+"&menu=search&viewNumber="+(viewNumber+1);
 		
 	}else if(${menu=='manage'}){
-		self.location="/product/getProductAction?prodNo="+prodNo+"&menu=search";
+		alert("manage");
+		self.location="/product/getProductAction?prodNo="+prodNo+"&menu=manage";
 	}
 	});
 	$("td:contains('배송하기')").on("click",function(){
@@ -216,7 +218,10 @@ function fncGetUserList(currentPage) {
 				</c:if>
 				<c:if test="${menu=='manage'}">
 
-				<td align="left">${list.purchaseProd.prodName }</td>
+				<td align="left">${list.purchaseProd.prodName }
+				<input type="hidden" name=${list.purchaseProd.prodNo } value="${list.purchaseProd.prodNo}">
+				<input type="hidden" name=${list.purchaseProd.viewNumber } value = "${list.purchaseProd.viewNumber }">
+				</td>
 				
 			
 

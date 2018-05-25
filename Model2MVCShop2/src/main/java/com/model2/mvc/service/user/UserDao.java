@@ -3,6 +3,7 @@ package com.model2.mvc.service.user;
 import java.util.List;
 
 import com.model2.mvc.common.Search;
+import com.model2.mvc.service.domain.Kakao;
 import com.model2.mvc.service.domain.User;
 
 
@@ -24,4 +25,9 @@ public interface UserDao {
 	// 게시판 Page 처리를 위한 전체Row(totalCount)  return
 	public int getTotalCount(Search search) throws Exception ;
 	
+	public Kakao getKakaoId(String name) throws Exception;
+	
+	public void addKakaoId(String name)throws Exception;
+	
+	public void linkKakao(Kakao kakao)throws Exception;
 }

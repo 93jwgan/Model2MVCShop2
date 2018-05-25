@@ -26,7 +26,7 @@
         	  $.ajax({
         		type:"post",
         		dataType:"json",
-        		url:"/user/loginAction/"
+        		url:"/user/loginAction/",
         		data : {JSON.parse(authObj).acces_token}
         		
         	  	

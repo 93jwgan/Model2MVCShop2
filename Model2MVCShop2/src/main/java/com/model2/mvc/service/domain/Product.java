@@ -5,7 +5,7 @@ import java.sql.Date;
 
 public class Product {
 	
-	private String fileName;
+	private String file;
 	private String manuDate;
 	private int price;
 	private String prodDetail;
@@ -27,11 +27,11 @@ public class Product {
 	public void setProTranCode(String proTranCode) {
 		this.proTranCode = proTranCode;
 	}
-	public String getFileName() {
-		return fileName;
+	public String getFile() {
+		return file;
 	}
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
+	public void setFile(String fileName) {
+		this.file = fileName;
 	}
 	public String getManuDate() {
 		return manuDate;
@@ -43,9 +43,7 @@ public class Product {
 		date +=manuDate.substring(0, 4);
 		date +=manuDate.substring(5,7);
 		date +=manuDate.substring(8,manuDate.length());
-		System.out.println("manuDate ============"+manuDate);
 		this.manuDate = date;
-        System.out.println("this.manuDate=========="+this.manuDate);
 		}else {
 			this.manuDate = manuDate;
 		}
@@ -86,7 +84,7 @@ public class Product {
 
 	// Override
 	public String toString() {
-		return "ProductVO : [fileName]" + fileName
+		return "ProductVO : [fileName]" + file
 				+ "[manuDate]" + manuDate+ "[price]" + price + "[prodDetail]" + prodDetail
 				+ "[prodName]" + prodName + "[prodNo]" + prodNo+ "[viewNumber]"+viewNumber+"[stock]"+stock
 				+ "[regDate]" + regDate + "[stockCode]" + stockCode;

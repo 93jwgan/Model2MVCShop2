@@ -3,6 +3,7 @@ package com.model2.mvc.service.user;
 import java.util.Map;
 
 import com.model2.mvc.common.Search;
+import com.model2.mvc.service.domain.Kakao;
 import com.model2.mvc.service.domain.User;
 
 
@@ -24,4 +25,9 @@ public interface UserService {
 	// 회원 ID 중복 확인
 	public boolean checkDuplication(String userId) throws Exception;
 	
+	public Kakao getKakaoId(String name) throws Exception;
+	
+	public void addKakaoId(String name)throws Exception;
+	
+	public void linkKakao(Kakao kakao)throws Exception;
 }

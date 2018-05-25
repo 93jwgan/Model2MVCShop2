@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.model2.mvc.common.Search;
+import com.model2.mvc.service.domain.Kakao;
 import com.model2.mvc.service.domain.User;
 import com.model2.mvc.service.user.UserService;
 import com.model2.mvc.service.user.UserDao;;
@@ -32,6 +33,16 @@ public class UserServiceImpl implements UserService{
 	}
 
 	///Method
+	public void linkKakao(Kakao kakao)throws Exception{
+		userDao.linkKakao(kakao);
+	}
+	public void addKakaoId(String name)throws Exception{
+		userDao.addKakaoId(name);
+	}
+	public Kakao getKakaoId(String name) throws Exception{
+		return userDao.getKakaoId(name);
+		
+	}
 	public void addUser(User user) throws Exception {
 		userDao.addUser(user);
 	}

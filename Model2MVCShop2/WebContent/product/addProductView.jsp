@@ -70,10 +70,10 @@ function fncAddProduct(){
 	
 	
 	if(number == "1" ){
-		document.detailForm.action='/product/addProductAction'
+		alert("number ==1");
 		$("form").attr("method","POST").attr("action","/product/addProductAction").submit();
 	}else{
-		document.detailForm.action='/product/updateProductAction';
+		alert("number !=1");
 		$("form").attr("method","POST").attr("action","/product/updateProductAction").submit();
 	}
 	
@@ -89,7 +89,7 @@ function fncAddProduct(){
 
 <body bgcolor="#ffffff" text="#000000">
 
-<form name="detailForm" >
+<form name="detailForm" enctype="multipart/form-data">
 <input type="hidden" name ="menu" value="${menu}">
 <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
 	<tr>
@@ -179,7 +179,7 @@ function fncAddProduct(){
 		<td width="104" class="ct_write">상품이미지</td>
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">
-			<input		type="text" name="fileName" class="ct_input_g" 
+			<input		type="file" name="fileName" class="ct_input_g" 
 							style="width: 200px; height: 19px" maxLength="13"/>
 		</td>
 	</tr>

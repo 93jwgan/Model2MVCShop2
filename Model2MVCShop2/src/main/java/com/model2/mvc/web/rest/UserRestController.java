@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.model2.mvc.common.Page;
 import com.model2.mvc.common.Search;
+import com.model2.mvc.service.domain.Kakao;
 import com.model2.mvc.service.domain.User;
 import com.model2.mvc.service.user.UserService;
 
@@ -50,6 +51,35 @@ public class UserRestController {
 	@Value("#{commonProperties['pageSize']}")
 	//@Value("#{commonProperties['pageSize'] ?: 2}")
 	int pageSize;
+	
+	
+	@RequestMapping(value="json/link",method=RequestMethod.GET)
+	public User link(@ModelAttribute Kakao kakao) throws Exception {
+		User user = userService.getUser(kakao.getUserId());
+		
+		
+		System.out.println(kakao.getKakaoId());
+		System.out.println(kakao.getUserId());
+		if(user !=null) {
+		userService.linkKakao(kakao);
+		return user;
+		}else {
+			return new User();	
+		}
+	}
+	
+	
+	@RequestMapping(value="json/kakaoId",method=RequestMethod.GET)
+	public Kakao kakaoId(@RequestParam("name") String name) throws Exception {
+		System.out.println("/kakaoId");
+		System.out.println("-------------");
+		System.out.println(name);
+
+		if(userService.getKakaoId(name)==null) {
+			userService.addKakaoId(name);
+		}
+		return userService.getKakaoId(name);
+	}
 	
 	@RequestMapping(value="json/getUserAction/{userId}" ,method=RequestMethod.GET)
 	public User getUser( @PathVariable String userId  ) throws Exception {

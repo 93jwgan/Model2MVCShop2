@@ -18,6 +18,30 @@
 		<result property="email" 			column="email" 				jdbcType="NUMERIC"  />
 		<result property="regDate" 		column="reg_date" 			jdbcType="DATE" />
 	</resultMap>
+	<resultMap id="kakaoSelectMap" type="kakao">
+		<result property="userId"		column="user_id"	jdbcType="VARCHAR"/>
+		<result property="kakaoId"		column="kakaoid"    jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	
+	<update id="linkKakao" parameterType="kakao">
+		UPDATE kakao
+		SET user_id = #{userId}
+		WHERE kakaoid = #{kakaoId}
+	</update>
+	
+	<insert id="addKakaoId" parameterType="string">
+		INSERT
+		INTO kakao(kakaoid)
+		values(#{value})
+	</insert>
+	
+	<select id="getKakaoId" parameterType="string" resultMap="kakaoSelectMap">
+		SELECT *
+		FROM kakao
+		WHERE kakaoid = #{value}
+	
+	</select>
 	
 	<!-- SQL : INSERT -->
 	<insert 	id="addUser"		parameterType="user" >

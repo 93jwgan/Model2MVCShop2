@@ -1,5 +1,6 @@
 package com.model2.mvc.web.product;
 
+import java.io.File;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.model2.mvc.common.Page;
 import com.model2.mvc.common.Search;
@@ -46,8 +48,16 @@ public class ProductController {
 	int pageSize;
 
 	@RequestMapping(value="addProductAction")
-	public String addProductAction(@ModelAttribute("product") Product product,HttpServletRequest request) throws Exception {
-
+	public String addProductAction(@ModelAttribute("product") Product product,
+																@RequestParam("fileName") MultipartFile multipartFile,	
+																HttpServletRequest request) throws Exception {
+		String fileName = multipartFile.getOriginalFilename();
+		System.out.println("addProductAction() start.....");
+		String path = request.getSession().getServletContext().getRealPath("/")+"images/uploadFiles";
+		File file = new File(path+fileName);
+		
+		multipartFile.transferTo(file);
+		product.setFile(fileName);
 		productService.addProduct(product);
 		
 		return "forward:/product/readProduct.jsp";
@@ -58,9 +68,11 @@ public class ProductController {
 																@RequestParam("prodNo") String prodNo,
 																HttpServletRequest request,Model model) throws Exception {
 		System.out.println("getProductAction() start");
+		
 		String viewNumber = request.getParameter("viewNumber");
 		String resultPage="";
 		if(menu.equals("manage")) {
+			System.out.println("menu.equlas()manage");
 			resultPage = "forward:/product/addProductView.jsp";
 		}else if(menu.equals("search")||menu.equals("purchase")){
 			if(menu.equals("search"))
@@ -72,10 +84,12 @@ public class ProductController {
 			}
 			resultPage ="forward:/product/detailProduct.jsp";
 		}
+		
+		
 		model.addAttribute("productVO",  productService.getProduct(Integer.parseInt(prodNo)));
 		model.addAttribute("menu", menu);
 		System.out.println("getProductAction() end");
-
+		
 		return resultPage;
 	}
 	
@@ -144,7 +158,7 @@ public class ProductController {
 																			,@RequestParam("prodNo") String prodNo
 																			,HttpServletRequest request,
 																			Model model) throws Exception {
-
+		System.out.println("updateProductAction() start...");
 		String menu = request.getParameter("menu");
 		product.setProdNo(Integer.parseInt(prodNo));		
 		product.setPrice(Integer.parseInt(request.getParameter("price")));
